@@ -647,7 +647,7 @@ export default function MapPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
-          {filterPanel}
+          <div className="flex-1 min-h-0">{filterPanel}</div>
           <div
             className="shrink-0 px-4 py-3 border-t border-gray-100 bg-white"
             style={{ paddingBottom: "max(12px, env(safe-area-inset-bottom))" }}
