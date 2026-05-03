@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --brand-dark: #05363d;
+  --brand-teal: #2b9aa5;
+  --brand-green: #54a47c;
+  --brand-mustard: #f2a51a;
+  --brand-muted: #eaf4f1;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Hide Leaflet's built-in attribution on mobile — replaced by custom React element */
+@media (max-width: 1023px) {
+  .leaflet-control-attribution {
+    display: none;
+  }
+}
+
+/* Leaflet popup polish */
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.14),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  padding: 0;
+  overflow: hidden;
+}
+.leaflet-popup-content {
+  margin: 0;
+  padding: 12px 14px;
+}
+.leaflet-popup-tip {
+  box-shadow: none;
+}
+.leaflet-popup-close-button {
+  top: 8px !important;
+  right: 10px !important;
+  color: #9ca3af !important;
+  font-size: 18px !important;
+  font-weight: 400 !important;
+}
+.leaflet-popup-close-button:hover {
+  color: #374151 !important;
+  background: none !important;
+}

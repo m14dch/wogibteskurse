@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Data
+data/
+!data/.gitkeep
+
+# Playwright MCP
+.playwright-mcp/
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

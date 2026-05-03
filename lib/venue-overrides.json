@@ -1,0 +1,1070 @@
+[
+  {
+    "name": "Albisgütli, Tramendstation Tram 13",
+    "lat": 47.3519636,
+    "lng": 8.507401,
+    "note": "Endhaltestelle Tram 13 beim Hundeplatz Albisgütli (OSM)"
+  },
+  {
+    "name": "Haltestelle Geeringstrasse (Linien 46, 78, 485)",
+    "lat": 47.4143217,
+    "lng": 8.480696,
+    "note": "Bushaltestelle Geeringstrasse, Höngg (OSM)"
+  },
+  {
+    "name": "Treffpunkt/ Verabschiedung: Bushaltestelle \"Zürich, Heubeeriweg\"",
+    "lat": 47.381621,
+    "lng": 8.5646,
+    "note": "Bushaltestelle Heubeeriweg"
+  },
+  {
+    "name": "Treffpunkt: Bushaltestelle \"Zürich, Heubeeriweg\" ",
+    "lat": 47.381621,
+    "lng": 8.5646,
+    "note": "Bushaltestelle Heubeeriweg (trailing space variant)"
+  },
+  {
+    "name": "Treffpunkt: Bushaltestelle \"Zürich, Heubeeriweg\"",
+    "lat": 47.381621,
+    "lng": 8.5646,
+    "note": "Bushaltestelle Heubeeriweg"
+  },
+  {
+    "name": "Besammlung und Schlusspunkt: Bushaltestelle Dunkelhölzli",
+    "lat": 47.388678,
+    "lng": 8.470161,
+    "note": "Bushaltestelle Dunkelhölzli"
+  },
+  {
+    "name": "Schulhaus Lachenzelg - obere Mensa",
+    "lat": 47.40489048862727,
+    "lng": 8.488899925786438,
+    "note": "Schulhaus Lachenzelg"
+  },
+  {
+    "name": "Falletsche - Sporthalle gross",
+    "lat": 47.332877071823276,
+    "lng": 8.514715985298977,
+    "note": "Sportanlage Falletsche"
+  },
+  {
+    "name": "Letzi - Sporthalle 1 (links)",
+    "lat": 47.37076217362828,
+    "lng": 8.49711028305695,
+    "note": "Sportanlage Letzigrund"
+  },
+  {
+    "name": "Lachenzelg (Pünten) - Sporthalle Ost",
+    "lat": 47.40491953428753,
+    "lng": 8.488701442336055,
+    "note": "Sportanlage Lachenzelg"
+  },
+  {
+    "name": "Lachenzelg (Pünten) - Sporthalle West",
+    "lat": 47.40491953428753,
+    "lng": 8.488701442336055,
+    "note": "Sportanlage Lachenzelg"
+  },
+  {
+    "name": "Atelier Elisabetha Bleisch",
+    "lat": 47.37216287941024,
+    "lng": 8.524643034982532,
+    "note": "Private atelier"
+  },
+  {
+    "name": "Atelier für Kunsttherapie Judith Elmiger",
+    "lat": 47.37216287941024,
+    "lng": 8.524643034982532,
+    "note": "Private atelier"
+  },
+  {
+    "name": "GZ Hottingen Standort Klosbachstrasse",
+    "lat": 47.368495605116344,
+    "lng": 8.562251663830198,
+    "note": "GZ Hottingen Klosbachstrasse"
+  },
+  {
+    "name": "ASVZ Sport Center Hönggerberg",
+    "lat": 47.40681498856128,
+    "lng": 8.510759210445922,
+    "note": "ETH Hönggerberg campus (swisstopo returned Fluntern)"
+  },
+  {
+    "name": "Ballet-Center Zürich",
+    "lat": 47.40502625983578,
+    "lng": 8.572995118605816,
+    "note": "manually verified (swisstopo returned Fluntern)"
+  },
+  {
+    "name": "Boulderlounge Schlieren",
+    "lat": 47.398916973279825,
+    "lng": 8.452790639280607,
+    "note": "Schlieren (swisstopo returned Zürich HB)"
+  },
+  {
+    "name": "Sportanlage Sonnenberg",
+    "lat": 47.368871971168986,
+    "lng": 8.572239641125083,
+    "note": "manually verified"
+  },
+  {
+    "name": "Sportanlage Utogrund",
+    "lat": 47.379292056835425,
+    "lng": 8.497000716268644,
+    "note": "manually verified"
+  },
+  {
+    "name": "Sportanlage Hofacker",
+    "lat": 47.36232674221981,
+    "lng": 8.56465660214313,
+    "note": "manually verified"
+  },
+  {
+    "name": "Allmend",
+    "lat": 47.355181785586204,
+    "lng": 8.522128166756055,
+    "note": "Allmend Brunau area"
+  },
+  {
+    "name": "Allmend Zürich",
+    "lat": 47.355181785586204,
+    "lng": 8.522128166756055,
+    "note": "Allmend Brunau area"
+  },
+  {
+    "name": "Allmend - Sporthalle",
+    "lat": 47.355181785586204,
+    "lng": 8.522128166756055,
+    "note": "Allmend Brunau area"
+  },
+  {
+    "name": "Freestylepark Allmend",
+    "lat": 47.355181785586204,
+    "lng": 8.522128166756055,
+    "note": "Allmend Brunau area"
+  },
+  {
+    "name": "Treffpunkt: Zürich Hauptbahnhof beim Gruppentreffpunkt",
+    "lat": 47.378101,
+    "lng": 8.539364,
+    "note": "Zürich HB Gruppentreffpunkt (OSM)"
+  },
+  {
+    "name": "Treffpunkt und Verabschiedung: Bushaltestelle Waidbadstrasse (Bus Nr. 38/69)",
+    "lat": 47.40298,
+    "lng": 8.517451,
+    "note": "Waidbadstrasse, Höngg (OSM)"
+  },
+  {
+    "name": "Treffpunkt: Parkplatz Hürstholz",
+    "lat": 47.416893,
+    "lng": 8.522981,
+    "note": "Hürstholz, Affoltern (OSM)"
+  },
+  {
+    "name": "Stadionbrache Hardturm (Treffpunkt Pizzaofen)",
+    "lat": 47.394038,
+    "lng": 8.513756,
+    "note": "Hardturm, Industriequartier (OSM)"
+  },
+  {
+    "name": "Schülergarten Bachwiesen / Alte Mühle",
+    "lat": 47.380011,
+    "lng": 8.486505,
+    "note": "Bachwiesenstrasse, Albisrieden (OSM)"
+  },
+  {
+    "name": "Freibad Allenmoos - Beachvolleyballfeld",
+    "lat": 47.404454,
+    "lng": 8.539019,
+    "note": "Freibad Allenmoos, Berninastrasse (OSM)"
+  },
+  {
+    "name": "Irchelpark und Umgebung",
+    "lat": 47.39796,
+    "lng": 8.544308,
+    "note": "Irchelpark, Kreis 6 (OSM)"
+  },
+  {
+    "name": "Hirschengraben - Sporthalle Süd",
+    "lat": 47.373781,
+    "lng": 8.54757,
+    "note": "Schulhaus Hirschengraben (OSM)"
+  },
+  {
+    "name": "Rütihof - Sporthalle 1 (Linolbelag)",
+    "lat": 47.412547,
+    "lng": 8.479377,
+    "note": "Schulhaus Rütihof, Giblenstrasse 61 (OSM)"
+  },
+  {
+    "name": "SSA Riedtli - Schulschwimmanlage Riedtli",
+    "lat": 47.389051,
+    "lng": 8.543187,
+    "note": "Riedtlistrasse 41, Unterstrass (OSM)"
+  },
+  {
+    "name": "SSA Stettbach - Schulschwimmanlage Stettbach",
+    "lat": 47.401629,
+    "lng": 8.580707,
+    "note": "Dübendorfstrasse 150, Hirzenbach (OSM)"
+  },
+  {
+    "name": "SSA Vogtsrain - Schulschwimmanlage Vogtsrain",
+    "lat": 47.404393,
+    "lng": 8.499311,
+    "note": "Ferdinand-Hodler-Strasse 25, Höngg (OSM)"
+  },
+  {
+    "name": "Sportanlage Allmend Brunau - Rugbyfeld",
+    "lat": 47.35394,
+    "lng": 8.522077,
+    "note": "Sportanlage Allmend Brunau, Allmendstrasse (OSM)"
+  },
+  {
+    "name": "Sportanlage Blumenfeld - Dreifachhalle",
+    "lat": 47.424433,
+    "lng": 8.503986,
+    "note": "Blumenfeldstrasse, Affoltern (OSM)"
+  },
+  {
+    "name": "Sportanlage Blumenfeld - Gymnastikraum",
+    "lat": 47.424433,
+    "lng": 8.503986,
+    "note": "Blumenfeldstrasse, Affoltern (OSM)"
+  },
+  {
+    "name": "Sportanlage Fronwald - Sporthalle",
+    "lat": 47.421906,
+    "lng": 8.509861,
+    "note": "Fronwaldstrasse, Affoltern (OSM)"
+  },
+  {
+    "name": "Sportanlage Im Birch - Dreifachhalle",
+    "lat": 47.415999,
+    "lng": 8.540035,
+    "note": "Schule Im Birch, Oerlikon (OSM)"
+  },
+  {
+    "name": "Schulhaus Scherr - Werkraum",
+    "lat": 47.384333,
+    "lng": 8.54654,
+    "note": "Schulhaus Scherr, Stapferstrasse 54 (OSM)"
+  },
+  {
+    "name": "Schulhaus Scherr - Werkraum im Altbau UG",
+    "lat": 47.384333,
+    "lng": 8.54654,
+    "note": "Schulhaus Scherr, Stapferstrasse 54 (OSM)"
+  },
+  {
+    "name": "KME Riesbach - Sporthalle",
+    "lat": 47.360166,
+    "lng": 8.554484,
+    "note": "Mühlebachstrasse 112, Kreis 8 (OSM)"
+  },
+  {
+    "name": "BoxGym",
+    "lat": 47.380864,
+    "lng": 8.519072,
+    "note": "Boxclub Sportring, Hohlstrasse 176 (OSM)"
+  },
+  {
+    "name": "Boxgym",
+    "lat": 47.380864,
+    "lng": 8.519072,
+    "note": "Boxclub Sportring, Hohlstrasse 176 (OSM)"
+  },
+  {
+    "name": "Judoschule Sektion Höngg",
+    "lat": 47.40091,
+    "lng": 8.500155,
+    "note": "Ackersteinstrasse 190, Höngg (OSM)"
+  },
+  {
+    "name": "Shukokai Karate Dojo Zürich",
+    "lat": 47.391901,
+    "lng": 8.528232,
+    "note": "Landenbergstrasse 10, Wipkingen (OSM)"
+  },
+  {
+    "name": "Tischfussballclub Zürich",
+    "lat": 47.391901,
+    "lng": 8.528232,
+    "note": "Landenbergstrasse 10, Wipkingen (OSM)"
+  },
+  {
+    "name": "Billard Golden 8",
+    "lat": 47.409223,
+    "lng": 8.543102,
+    "note": "Baumackerstrasse 41, Oerlikon (OSM)"
+  },
+  {
+    "name": "Billard Club Altstetten-Albisrieden",
+    "lat": 47.387756,
+    "lng": 8.49395,
+    "note": "Albulastrasse 39, Altstetten (OSM)"
+  },
+  {
+    "name": "Tennisclub Fairplay",
+    "lat": 47.397027,
+    "lng": 8.538059,
+    "note": "Guggachstrasse 24a, Unterstrass (OSM)"
+  },
+  {
+    "name": "Squash-Anlage GC",
+    "lat": 47.356539,
+    "lng": 8.571164,
+    "note": "August-Forel-Strasse 15, Weinegg (OSM)"
+  },
+  {
+    "name": "Minimum Boulderhalle Leutsch",
+    "lat": 47.415944,
+    "lng": 8.554692,
+    "note": "MINIMUM Boulder Leutsch, Leutschenbachstrasse 44 (OSM)"
+  },
+  {
+    "name": "Geschäftsstelle BOS Schweiz und Minimum Boulderhalle",
+    "lat": 47.415944,
+    "lng": 8.554692,
+    "note": "MINIMUM Boulder Leutsch, Leutschenbachstrasse 44 (OSM)"
+  },
+  {
+    "name": "Minimum Boulderhalle und Geschäftsstelle BOS Schweiz",
+    "lat": 47.415944,
+    "lng": 8.554692,
+    "note": "MINIMUM Boulder Leutsch, Leutschenbachstrasse 44 (OSM)"
+  },
+  {
+    "name": "Ponyranch Zürich, Reithalle Auhölzli",
+    "lat": 47.416712,
+    "lng": 8.569824,
+    "note": "Opfikonstrasse 156, Saatlen (OSM)"
+  },
+  {
+    "name": "Clubhaus Zürcher Yacht Club",
+    "lat": 47.364234,
+    "lng": 8.538311,
+    "note": "Zürcher Yacht Club, General-Guisan-Quai (OSM)"
+  },
+  {
+    "name": "Bootshaus Belvoir Ruderclub Zürich",
+    "lat": 47.356935,
+    "lng": 8.533781,
+    "note": "Belvoirpark, Kreis 2 (OSM)"
+  },
+  {
+    "name": "Bootshaus Ruderclub Zürich",
+    "lat": 47.357606,
+    "lng": 8.535871,
+    "note": "Polytechniker Ruderclub, Mythenquai 67 (OSM)"
+  },
+  {
+    "name": "KuBaA - Kultur Bahnhof Affoltern",
+    "lat": 47.421546,
+    "lng": 8.507588,
+    "note": "Bahnhof Affoltern, Zehntenhausstrasse (OSM)"
+  },
+  {
+    "name": "Theater im Zollhaus anundpfirsich",
+    "lat": 47.381598,
+    "lng": 8.52965,
+    "note": "Theater im Zollhaus, Zollstrasse 121 (OSM)"
+  },
+  {
+    "name": "Theater im Zollhaus anundpfirsich ",
+    "lat": 47.381598,
+    "lng": 8.52965,
+    "note": "Theater im Zollhaus, Zollstrasse 121 — trailing space variant"
+  },
+  {
+    "name": "Logiscool Zürich",
+    "lat": 47.36758,
+    "lng": 8.56027,
+    "note": "Klosbachstrasse 90, Hottingen (OSM)"
+  },
+  {
+    "name": "Code Camp Switzerland AG",
+    "lat": 47.339838,
+    "lng": 8.520081,
+    "note": "Maneggplatz 44, Wollishofen (OSM)"
+  },
+  {
+    "name": "Code Camp Switzerland AG ",
+    "lat": 47.339838,
+    "lng": 8.520081,
+    "note": "Maneggplatz 44, Wollishofen — trailing space variant"
+  },
+  {
+    "name": "Filmschule filmkids.ch",
+    "lat": 47.394166,
+    "lng": 8.481786,
+    "note": "Vulkanstrasse 120, Altstetten (OSM)"
+  },
+  {
+    "name": "Tekmania GmbH",
+    "lat": 47.361317,
+    "lng": 8.52667,
+    "note": "Waffenplatzstrasse 11, Enge (OSM)"
+  },
+  {
+    "name": "GZ Riesbach - Keramikwerkstatt",
+    "lat": 47.35915,
+    "lng": 8.554045,
+    "note": "Gemeinschaftszentrum Riesbach, Seefeldstrasse 93 (OSM)"
+  },
+  {
+    "name": "Nuori Malspielraum",
+    "lat": 47.367389,
+    "lng": 8.56489,
+    "note": "Bergstrasse 125, Hottingen (OSM)"
+  },
+  {
+    "name": "KreativWerkstatt",
+    "lat": 47.371655,
+    "lng": 8.516309,
+    "note": "Kalkbreitestrasse 97, Sihlfeld (OSM)"
+  },
+  {
+    "name": "Schreibschule Oktopus",
+    "lat": 47.387526,
+    "lng": 8.514419,
+    "note": "Turbinenstrasse 24, Industriequartier (OSM)"
+  },
+  {
+    "name": "Lovebug Fotostudio",
+    "lat": 47.377216,
+    "lng": 8.538277,
+    "note": "Löwenstrasse 69, City (OSM)"
+  },
+  {
+    "name": "HOGA - House Of Gentle Arts",
+    "lat": 47.370696,
+    "lng": 8.513021,
+    "note": "Goldbrunnenstrasse 120, Sihlfeld (OSM)"
+  },
+  {
+    "name": "dieCuisine",
+    "lat": 47.392652,
+    "lng": 8.492199,
+    "note": "Geerenweg 23a, Altstetten (OSM)"
+  },
+  {
+    "name": "Huebhof",
+    "lat": 47.3982239,
+    "lng": 8.5787288,
+    "note": "Huebhof petting zoo, Hirzenbach, Kreis 12 (OSM)"
+  },
+  {
+    "name": "Igelzentrum Zürich",
+    "lat": 47.4148401,
+    "lng": 8.562071,
+    "note": "Hedgehog rescue centre, Zürich-Nord (OSM)"
+  },
+  {
+    "name": "Bogensportzentrum Zürich",
+    "lat": 47.3646484,
+    "lng": 8.5108742,
+    "note": "Archery centre, Alt-Wiedikon, Kreis 3 (OSM)"
+  },
+  {
+    "name": "Budokan-Zürich ",
+    "lat": 47.3718068,
+    "lng": 8.5215988,
+    "note": "Martial arts centre, Sihlfeld — trailing space variant (OSM)"
+  },
+  {
+    "name": "Urbansurf",
+    "lat": 47.3849327,
+    "lng": 8.5198291,
+    "note": "Artificial wave surf facility, Industriequartier (OSM)"
+  },
+  {
+    "name": "FABRIK11",
+    "lat": 47.3977416,
+    "lng": 8.6040234,
+    "note": "Sports/fitness facility, Stettbach, Dübendorf (OSM)"
+  },
+  {
+    "name": "Dynamo",
+    "lat": 47.3833119,
+    "lng": 8.539341,
+    "note": "Jugendkulturhaus Dynamo, Wasserwerkstrasse 21, Unterstrass (OSM)"
+  },
+  {
+    "name": "Kunsthalle Zürich",
+    "lat": 47.3894008,
+    "lng": 8.5248893,
+    "note": "Kunsthalle Zürich, Limmatstrasse 270, Industriequartier (OSM)"
+  },
+  {
+    "name": "GeschichtenBäckerei",
+    "lat": 47.3737342,
+    "lng": 8.5459968,
+    "note": "Creative writing studio, Predigerplatz area, Altstadt (OSM)"
+  },
+  {
+    "name": "Graffland",
+    "lat": 47.4195863,
+    "lng": 8.5658964,
+    "note": "Graffiti studio at ARA Glatt, 8152 Opfikon (OSM)"
+  },
+  {
+    "name": "Allenmoos - Sporthalle oben",
+    "lat": 47.40262,
+    "lng": 8.53942,
+    "note": "Primarschule Allenmoos, Zürich-Waidberg (swisstopo)"
+  },
+  {
+    "name": "Allenmoos - Sporthalle unten",
+    "lat": 47.40262,
+    "lng": 8.53942,
+    "note": "Primarschule Allenmoos, Zürich-Waidberg (swisstopo)"
+  },
+  {
+    "name": "Ausserhil/Kern - Mehrzwecksaal Kern",
+    "lat": 47.37748,
+    "lng": 8.52506,
+    "note": "Schulhaus Kern, Kreis 4 (OSM)"
+  },
+  {
+    "name": "Ausserhil/Kern - Sporthalle A",
+    "lat": 47.37748,
+    "lng": 8.52506,
+    "note": "Schulhaus Kern, Kreis 4 (OSM)"
+  },
+  {
+    "name": "Ausserhil/Kern - Sporthalle B",
+    "lat": 47.37748,
+    "lng": 8.52506,
+    "note": "Schulhaus Kern, Kreis 4 (OSM)"
+  },
+  {
+    "name": "Ausserhil/Kern - Sporthalle C",
+    "lat": 47.37748,
+    "lng": 8.52506,
+    "note": "Schulhaus Kern, Kreis 4 (OSM)"
+  },
+  {
+    "name": "Borrweg - Sporthalle 1 und Sporthalle 2",
+    "lat": 47.36152,
+    "lng": 8.50665,
+    "note": "Schulanlage Borrweg, Friesenberg (OSM)"
+  },
+  {
+    "name": "Buhnrain - Sporthalle unten",
+    "lat": 47.42166,
+    "lng": 8.54247,
+    "note": "Buhnrain, Schwamendingen (OSM)"
+  },
+  {
+    "name": "Bühl - Sporthalle 1 links",
+    "lat": 47.36823,
+    "lng": 8.51634,
+    "note": "Schulhaus Bühl A, Wiedikon (OSM)"
+  },
+  {
+    "name": "Bühl - Sporthalle 2 rechts",
+    "lat": 47.36823,
+    "lng": 8.51634,
+    "note": "Schulhaus Bühl A, Wiedikon (OSM)"
+  },
+  {
+    "name": "Falletsche - Sporthalle klein",
+    "lat": 47.33332,
+    "lng": 8.5154,
+    "note": "Schulanlage Falletsche, Leimbach (swisstopo)"
+  },
+  {
+    "name": "Hallenbad Bungertwies - Hallenbad Bungertwies",
+    "lat": 47.372005,
+    "lng": 8.5602056,
+    "note": "Hallenbad Bungertwies, Kreis 7 (OSM)"
+  },
+  {
+    "name": "Heumatt (Himmeri) - Sporthalle Heumatt",
+    "lat": 47.42346,
+    "lng": 8.53694,
+    "note": "Primarschule Heumatt, Schwamendingen (swisstopo)"
+  },
+  {
+    "name": "Hirschengraben - Sporthalle Nord",
+    "lat": 47.373781,
+    "lng": 8.54757,
+    "note": "Schulhaus Hirschengraben, Kreis 1 (OSM)"
+  },
+  {
+    "name": "Hirzenbach - Sporthalle ganze Halle",
+    "lat": 47.40439,
+    "lng": 8.58703,
+    "note": "Schulhaus Hirzenbach, Schwamendingen (OSM)"
+  },
+  {
+    "name": "Hofacker - Halle 1 (rechts)",
+    "lat": 47.36234,
+    "lng": 8.56513,
+    "note": "Schulanlage Hofacker, Hirslanden (swisstopo)"
+  },
+  {
+    "name": "Hofacker Sek - Einfachhalle/Spezialhalle",
+    "lat": 47.36234,
+    "lng": 8.56513,
+    "note": "Schulanlage Hofacker, Hirslanden (swisstopo)"
+  },
+  {
+    "name": "Sportanlage Hofacker - Sporthalle 1 (rechts)",
+    "lat": 47.36234,
+    "lng": 8.56513,
+    "note": "Schulanlage Hofacker, Hirslanden (swisstopo)"
+  },
+  {
+    "name": "Im Gut - Sporthalle Nord",
+    "lat": 47.37137,
+    "lng": 8.5041,
+    "note": "Primarschule Im Gut, Altstetten (swisstopo)"
+  },
+  {
+    "name": "Im Gut - Sporthalle Süd",
+    "lat": 47.37137,
+    "lng": 8.5041,
+    "note": "Primarschule Im Gut, Altstetten (swisstopo)"
+  },
+  {
+    "name": "Imfeldstrasse - Sporthalle oben (Turnhaus Letten)",
+    "lat": 47.38865,
+    "lng": 8.53533,
+    "note": "Imfeldstrasse 5a, Unterstrass (swisstopo)"
+  },
+  {
+    "name": "Imfeldstrasse - Sporthalle unten (TH Letten mit Spiegelwand)",
+    "lat": 47.38865,
+    "lng": 8.53533,
+    "note": "Imfeldstrasse 5a, Unterstrass (swisstopo)"
+  },
+  {
+    "name": "Kappeli Primar - Sporthalle Kappeli unten (Gymnastikraum)",
+    "lat": 47.38666,
+    "lng": 8.49309,
+    "note": "Schulhaus Kappeli, Altstetten (OSM)"
+  },
+  {
+    "name": "Kappeli Primar - Sporthalle Kappeli ost (vorne)",
+    "lat": 47.38666,
+    "lng": 8.49309,
+    "note": "Schulhaus Kappeli, Altstetten (OSM)"
+  },
+  {
+    "name": "Kindergartenhaus Wiedikon - Sporthalle",
+    "lat": 47.37294,
+    "lng": 8.52787,
+    "note": "Wiedikon area, Birmensdorferstrasse (swisstopo approx.)"
+  },
+  {
+    "name": "Kolbenacker - Sporthalle oben ",
+    "lat": 47.4264,
+    "lng": 8.55107,
+    "note": "Primarschule Kolbenacker, Zürich-Glattal — trailing space variant (swisstopo)"
+  },
+  {
+    "name": "Kolbenacker - Sporthalle unten",
+    "lat": 47.4264,
+    "lng": 8.55107,
+    "note": "Primarschule Kolbenacker, Zürich-Glattal (swisstopo)"
+  },
+  {
+    "name": "Kügeliloo - Sporthalle oben",
+    "lat": 47.41043,
+    "lng": 8.52851,
+    "note": "Primarschule Kügeliloo, Oerlikon (swisstopo)"
+  },
+  {
+    "name": "Kügeliloo - Sporthalle unten",
+    "lat": 47.41043,
+    "lng": 8.52851,
+    "note": "Primarschule Kügeliloo, Oerlikon (swisstopo)"
+  },
+  {
+    "name": "Liguster - Sporthalle oben",
+    "lat": 47.40649,
+    "lng": 8.54451,
+    "note": "Sekundarschule Liguster, Zürich-Glattal (swisstopo)"
+  },
+  {
+    "name": "Liguster - Sporthalle unten",
+    "lat": 47.40649,
+    "lng": 8.54451,
+    "note": "Sekundarschule Liguster, Zürich-Glattal (swisstopo)"
+  },
+  {
+    "name": "Pfingstweid - Schulzimmer Nr. 109",
+    "lat": 47.38895,
+    "lng": 8.51366,
+    "note": "Turnhalle Schulhaus Pfingstweid, Kreis 5 (OSM)"
+  },
+  {
+    "name": "Rütihof - Sporthalle 1+2 (Linolbelag/Parkettbelag)",
+    "lat": 47.412547,
+    "lng": 8.479377,
+    "note": "Schulhaus Rütihof, Giblenstrasse 61 (OSM)"
+  },
+  {
+    "name": "Rütihof - Sporthalle 2 (Parkettbelag)",
+    "lat": 47.412547,
+    "lng": 8.479377,
+    "note": "Schulhaus Rütihof, Giblenstrasse 61 (OSM)"
+  },
+  {
+    "name": "Schule Fokus Sehen (SfS) - Sporthalle",
+    "lat": 47.36234,
+    "lng": 8.56513,
+    "note": "Schulanlage Hofacker area, Kreis 7 — SfS shares Hofacker sports facilities (swisstopo approx.)"
+  },
+  {
+    "name": "Schulhaus Aemtler A - Aula",
+    "lat": 47.37411,
+    "lng": 8.5122,
+    "note": "Schule Aemtler, Wiedikon (OSM)"
+  },
+  {
+    "name": "Schulhaus Leutschenbach - Aula",
+    "lat": 47.41347,
+    "lng": 8.56254,
+    "note": "Schulhaus Leutschenbach, Zürich-Nord (OSM)"
+  },
+  {
+    "name": "Schulhaus Schanzengraben - Aula",
+    "lat": 47.37012,
+    "lng": 8.53514,
+    "note": "Schulhaus Schanzengraben, Altstadt (OSM)"
+  },
+  {
+    "name": "Schütze - Sporthalle/Sportplatz/Pausenplatz",
+    "lat": 47.38884,
+    "lng": 8.52372,
+    "note": "Primarschule Schütze, Zürich-Limmattal (swisstopo)"
+  },
+  {
+    "name": "Sihlweid - Sporthalle 1 (oben)",
+    "lat": 47.32705,
+    "lng": 8.51619,
+    "note": "Primarschule Sihlweid, Leimbach (swisstopo)"
+  },
+  {
+    "name": "Sportanlage Im Birch - Gymnastikraum",
+    "lat": 47.41634,
+    "lng": 8.54014,
+    "note": "Primarschule Im Birch, Zürich-Glattal (swisstopo)"
+  },
+  {
+    "name": "Sportanlage Im Birch - Kraftraum",
+    "lat": 47.41634,
+    "lng": 8.54014,
+    "note": "Primarschule Im Birch, Zürich-Glattal (swisstopo)"
+  },
+  {
+    "name": "Sportanlage Im Birch - Sporthalle 1 (links)",
+    "lat": 47.41634,
+    "lng": 8.54014,
+    "note": "Primarschule Im Birch, Zürich-Glattal (swisstopo)"
+  },
+  {
+    "name": "Sportanlage Im Birch - Sporthalle 3 (rechts)",
+    "lat": 47.41634,
+    "lng": 8.54014,
+    "note": "Primarschule Im Birch, Zürich-Glattal (swisstopo)"
+  },
+  {
+    "name": "Sporthalle An der Egg - Sporthalle 1 (links)",
+    "lat": 47.34089,
+    "lng": 8.53412,
+    "note": "Sport-/Turnhalle An der Egg 1+2, Wollishofen (OSM)"
+  },
+  {
+    "name": "Sportzentrum Heuried - Gymnastikraum",
+    "lat": 47.36805,
+    "lng": 8.5051,
+    "note": "Sportzentrum Heuried, Küngenmatt, Friesenberg (OSM)"
+  },
+  {
+    "name": "Staudenbühl (Himmeri) - Sporthalle Staudenbühl",
+    "lat": 47.41895,
+    "lng": 8.53538,
+    "note": "Primarschule Staudenbühl, Schwamendingen (swisstopo)"
+  },
+  {
+    "name": "Thurgauerstrasse - Sporthalle 1 links",
+    "lat": 47.41268,
+    "lng": 8.55066,
+    "note": "Schulhaus Thurgauerstrasse, Oerlikon (OSM)"
+  },
+  {
+    "name": "Thurgauerstrasse - Sporthalle 2 rechts",
+    "lat": 47.41268,
+    "lng": 8.55066,
+    "note": "Schulhaus Thurgauerstrasse, Oerlikon (OSM)"
+  },
+  {
+    "name": "Triemli - Provisorium Triemli / In der Ey",
+    "lat": 47.37537,
+    "lng": 8.48733,
+    "note": "Provisorium Sporthalle In der Ey, Altstetten (OSM)"
+  },
+  {
+    "name": "Waidhalde - Sporthalle oben",
+    "lat": 47.39719,
+    "lng": 8.52605,
+    "note": "Primarschule Waidhalde, Zürich-Waidberg (swisstopo)"
+  },
+  {
+    "name": "Waidhalde - Sporthalle unten",
+    "lat": 47.39719,
+    "lng": 8.52605,
+    "note": "Primarschule Waidhalde, Zürich-Waidberg (swisstopo)"
+  },
+  {
+    "name": "AZR Ausbildungszentrum Rohwiesen - Sporthalle Auzelg",
+    "lat": 47.41472,
+    "lng": 8.57016,
+    "note": "Primarschule Auzelg, Schwamendingen (swisstopo approx.)"
+  },
+  {
+    "name": "SSA Aemtler - Schulschwimmanlage Aemtler",
+    "lat": 47.37351,
+    "lng": 8.51157,
+    "note": "Schulanlage Aemtler, Wiedikon (swisstopo)"
+  },
+  {
+    "name": "SSA Altweg - Schulschwimmanlage Altweg",
+    "lat": 47.37249,
+    "lng": 8.49264,
+    "note": "Primarschule Altweg, Zürich-Letzi (swisstopo)"
+  },
+  {
+    "name": "SSA Aubrücke - Schulschwimmanlage Aubrücke",
+    "lat": 47.4096,
+    "lng": 8.57123,
+    "note": "Schulschwimmanlage Aubrücke, Zürich (OSM)"
+  },
+  {
+    "name": "SSA Buhn - Schulschwimmanlage Buhn",
+    "lat": 47.42092,
+    "lng": 8.5451,
+    "note": "Primarschule Buhn, Zürich-Glattal (swisstopo)"
+  },
+  {
+    "name": "SSA Freilager - Schulschwimmanlage Freilager",
+    "lat": 47.37904,
+    "lng": 8.48759,
+    "note": "Primarschule Freilager, Zürich-Letzi (swisstopo)"
+  },
+  {
+    "name": "SSA Hardau - Schulschwimmanlage Hardau",
+    "lat": 47.38254,
+    "lng": 8.50962,
+    "note": "Primarschule Hardau, Zürich-Limmattal (swisstopo)"
+  },
+  {
+    "name": "SSA Kügeliloo - Schulschwimmanlage Kügeliloo",
+    "lat": 47.41043,
+    "lng": 8.52851,
+    "note": "Primarschule Kügeliloo, Oerlikon (swisstopo)"
+  },
+  {
+    "name": "SSA Letten - Schulschwimmanlage Letten",
+    "lat": 47.38912,
+    "lng": 8.53312,
+    "note": "Primarschule Letten, Zürich-Waidberg (swisstopo)"
+  },
+  {
+    "name": "SSA Looren - Schulschwimmanlage Looren",
+    "lat": 47.36107,
+    "lng": 8.5962,
+    "note": "Primarschule Looren, Zürich-Zürchberg (swisstopo)"
+  },
+  {
+    "name": "SSA Riesbach - Schulschwimmanlage Riesbach",
+    "lat": 47.35893,
+    "lng": 8.56642,
+    "note": "Schulanlage Riesbach, Zürich-Riesbach (swisstopo)"
+  },
+  {
+    "name": "SSA Staudenbühl - Schulschwimmanlage Staudenbühl",
+    "lat": 47.41895,
+    "lng": 8.53538,
+    "note": "Primarschule Staudenbühl, Schwamendingen (swisstopo)"
+  },
+  {
+    "name": "SSA Tannenrauch - Schulschwimmanlage Tannenrauch",
+    "lat": 47.34837,
+    "lng": 8.52779,
+    "note": "Tannenrauchstrasse 4, Wollishofen (swisstopo)"
+  },
+  {
+    "name": "Buchwiesen - Halle A/2 gross",
+    "lat": 47.42762,
+    "lng": 8.54064,
+    "note": "Primarschule Buchwiesen, Zürich-Glattal (swisstopo)"
+  },
+  {
+    "name": "Buchwiesen - Halle B/1 klein",
+    "lat": 47.42762,
+    "lng": 8.54064,
+    "note": "Primarschule Buchwiesen, Zürich-Glattal (swisstopo)"
+  },
+  {
+    "name": "In der Ey - Provisorium",
+    "lat": 47.37537,
+    "lng": 8.48733,
+    "note": "Provisorium Sporthalle In der Ey, Altstetten (OSM)"
+  },
+  {
+    "name": "In der Ey - Sporthalle oben",
+    "lat": 47.37537,
+    "lng": 8.48733,
+    "note": "Provisorium Sporthalle In der Ey, Altstetten (OSM)"
+  },
+  {
+    "name": "SSA Grünau - Schulschwimmanlage Grünau",
+    "lat": 47.39678,
+    "lng": 8.48811,
+    "note": "Primarschule Grünau, Zürich-Letzi (swisstopo)"
+  },
+  {
+    "name": "Mindful Tree Education am Kreuzplatz",
+    "lat": 47.364998,
+    "lng": 8.553966,
+    "note": "Kreuzplatz, Hottingen (OSM)"
+  },
+  {
+    "name": "Fit4Motion",
+    "lat": 47.384125,
+    "lng": 8.493243,
+    "note": "Buckhauserstrasse 40, Altstetten (OSM)"
+  },
+  {
+    "name": "LUSH-Shop",
+    "lat": 47.375134,
+    "lng": 8.538293,
+    "note": "Lintheschergasse 6, City (OSM)"
+  },
+  {
+    "name": "Siedlungslokal Baugenossenschaft Waidmatt",
+    "lat": 47.35164,
+    "lng": 8.516501,
+    "note": "Waidmattweg, Friesenberg (OSM)"
+  },
+  {
+    "name": "Verein ELCH für Eltere & Chind, Raum Treffpunkt",
+    "lat": 47.410035,
+    "lng": 8.534487,
+    "note": "Regensbergstrasse 209, Oerlikon (OSM)"
+  },
+  {
+    "name": "tierische Naturwerkstatt im Mittelleimbach",
+    "lat": 47.323261,
+    "lng": 8.514644,
+    "note": "Mittelleimbach, Leimbach (OSM)"
+  },
+  {
+    "name": "Yonex Badminton Halle",
+    "lat": 47.38209633228853,
+    "lng": 8.495799954181859,
+    "note": "Flüelastrasse 27, 8047 Zürich (official detail API)"
+  },
+  {
+    "name": "Bootshaus GC",
+    "lat": 47.35648109728408,
+    "lng": 8.53599675717507,
+    "note": "Mythenquai 81, 8002 Zürich (official detail API, reviewed)"
+  },
+  {
+    "name": "Geschäftsstelle BOS Schweiz ",
+    "lat": 47.37296190564102,
+    "lng": 8.52535883092252,
+    "note": "Zweierstr. 38a, 8004 Zürich — trailing space variant (official detail API, reviewed)"
+  },
+  {
+    "name": "TANZ-FABRIK",
+    "lat": 47.362706173951096,
+    "lng": 8.527400463922557,
+    "note": "Bederstrasse 77, 8002 Zürich (official detail API, reviewed)"
+  },
+  {
+    "name": "Galactic Dance",
+    "lat": 47.38801769476251,
+    "lng": 8.493546517652094,
+    "note": "Albulastr. 47, 8048 Zürich-Altstetten (official detail API, reviewed)"
+  },
+  {
+    "name": "Malatelier Affoltern",
+    "lat": 47.422399763151546,
+    "lng": 8.504975913270274,
+    "note": "Nettie-Sutro-Strasse 9, 8046 Zürich (official detail API, reviewed)"
+  },
+  {
+    "name": "Tanzschule Dance it",
+    "lat": 47.38372482849181,
+    "lng": 8.549457217457617,
+    "note": "Stäblistr. 2, 8006 Zürich (official detail API, reviewed)"
+  },
+  {
+    "name": "Allmend - TTG-Zimmer Nr. 112",
+    "lat": 47.340663087589256,
+    "lng": 8.520254610276329,
+    "note": "Maneggstrasse 51, 8041 Zürich (official detail API, reviewed)"
+  },
+  {
+    "name": "Bikepark Allmend",
+    "lat": 47.354401235821285,
+    "lng": 8.523829117222109,
+    "note": "Allmendstr. 1, 8045 Zürich (official detail API, reviewed)"
+  },
+  {
+    "name": "Studio SOE Flos",
+    "lat": 47.33786585232549,
+    "lng": 8.52501458194976,
+    "note": "Entlisbergstrasse 21, 8038 Zürich (official detail API, reviewed)"
+  },
+  {
+    "name": "Garten am Grenzsteig",
+    "lat": 47.334001274932625,
+    "lng": 8.539848013656353,
+    "note": "Kilchbergstrasse 193, 8038 Zürich (official detail API, reviewed)"
+  },
+  {
+    "name": "GZ Affoltern",
+    "lat": 47.42455734841834,
+    "lng": 8.510943688830217,
+    "note": "Bodenacker 25, 8046 Zürich (official detail API, reviewed)"
+  },
+  {
+    "name": "GZ Buchegg",
+    "lat": 47.39897328730565,
+    "lng": 8.53514938787179,
+    "note": "Bucheggstr. 93, 8057 Zürich (official detail API, reviewed)"
+  },
+  {
+    "name": "Kornhaus - Sporthalle B",
+    "lat": 47.3861589013948,
+    "lng": 8.530011805949584,
+    "note": "Kornhaus, Limmatstrasse 176, 8005 Zürich (official detail API, reviewed)"
+  },
+  {
+    "name": "Schule Altweg / TTG-Zimmer",
+    "lat": 47.37258401231934,
+    "lng": 8.492354054059305,
+    "note": "Letzigraben 204, 8047 Zürich (official detail API, reviewed)"
+  },
+  {
+    "name": "Schulhaus Limmat A - Aula",
+    "lat": 47.383501352278145,
+    "lng": 8.53423520892516,
+    "note": "Limmatstrasse 90, 8005 Zürich (official detail API, reviewed)"
+  },
+  {
+    "name": "ZSF Ferienhaus Colonia Zurighese",
+    "lat": 45.97959899902344,
+    "lng": 8.892976760864258,
+    "note": "Via Fiume 1, 6983 Magliaso; swisstopo resolved Via Fiume 9 (reviewed)"
+  }
+]

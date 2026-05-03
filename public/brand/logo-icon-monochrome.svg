@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 180" role="img" aria-labelledby="title desc">
+  <title id="title">Wo gibt es Kurse? Zürich course finder icon</title>
+  <desc id="desc">A minimal Zürich-inspired skyline with churches on opposite sides of the Limmat and a small open book representing courses.</desc>
+  <g fill="none" stroke="#05363D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <!-- left tree -->
+    <path d="M33 116V86" stroke="#05363D"/>
+    <path d="M33 86c-15 0-22 18-12 29 4 5 10 7 17 5 11 8 28 1 28-15 0-12-9-21-20-21-3-11-13-19-26-15" stroke="#05363D"/>
+
+    <!-- Fraumünster / left river side -->
+    <path d="M85 120V56L104 13l19 43v64"/>
+    <path d="M72 120V91h50"/>
+    <path d="M85 56h38"/>
+    <circle cx="104" cy="80" r="7"/>
+    <path d="M100 44l4-31 4 31"/>
+
+    <!-- bridge -->
+    <path d="M124 112H236"/>
+    <path d="M144 112c5-16 23-16 28 0"/>
+    <path d="M180 112c5-16 23-16 28 0"/>
+    <path d="M216 112c5-16 23-16 28 0"/>
+
+    <!-- Grossmünster / right river side -->
+    <path d="M250 120V50c0-17 15-27 22-35 7 8 22 18 22 35v70"/>
+    <path d="M300 120V50c0-17 15-27 22-35 7 8 22 18 22 35v70"/>
+    <path d="M250 59h44M300 59h44"/>
+    <path d="M268 77v14M318 77v14M268 103v14M318 103v14"/>
+    <circle cx="272" cy="10" r="2" fill="#05363D" stroke="none"/>
+    <circle cx="322" cy="10" r="2" fill="#05363D" stroke="none"/>
+
+    <!-- right roof hint -->
+    <path d="M344 120v-29h-23"/>
+
+    <!-- Limmat waves -->
+    <path d="M104 141c20-10 42-10 62 0s42 10 62 0" stroke="#05363D"/>
+    <path d="M126 160c16-7 34-7 50 0s34 7 50 0" stroke="#05363D"/>
+
+    <!-- open book / course symbol -->
+    <path d="M282 137c14-8 31-8 46 0v34c-15-8-32-8-46 0z" stroke="#05363D"/>
+    <path d="M328 137c10-6 20-7 30-4v34c-10-3-20-2-30 4z" stroke="#05363D"/>
+    <path d="M328 137v34" stroke="#05363D"/>
+  </g>
+</svg>
