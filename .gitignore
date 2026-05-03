@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+tsconfig.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Data
+data/
+!data/.gitkeep
+.seed/
+
+# Playwright MCP
+.playwright-mcp/
+test-results/
+
+# Screenshots / local images
+*.png
+*.jpg
+*.jpeg
+images/
+
+# Local assistant context
+CLAUDE.md
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
