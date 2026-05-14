@@ -122,13 +122,14 @@ export default function CoursePopup({ course }: Props) {
         )}
       </dl>
 
-      {/* Status badges */}
+      {/* Status badges — three mutually exclusive availability states; status2 wins over hatFreiePlaetze */}
       {(() => {
         const aufWarteliste = course.status2?.toLowerCase().includes("warteliste") ?? false;
-        const ausgebucht = !course.hatFreiePlaetze && !aufWarteliste;
+        const freiePlayetze = !aufWarteliste && course.hatFreiePlaetze;
+        const ausgebucht = !aufWarteliste && !course.hatFreiePlaetze;
         return (
           <div className="flex flex-wrap gap-1.5 mb-4">
-            {course.hatFreiePlaetze ? (
+            {freiePlayetze ? (
               <span className="bg-green-100 text-green-800 text-xs px-2.5 py-1 rounded-full font-medium">
                 Freie Plätze
               </span>
@@ -136,8 +137,7 @@ export default function CoursePopup({ course }: Props) {
               <span className="bg-red-100 text-red-800 text-xs px-2.5 py-1 rounded-full font-medium">
                 Ausgebucht
               </span>
-            ) : null}
-            {aufWarteliste && (
+            ) : (
               <span className="bg-orange-100 text-orange-800 text-xs px-2.5 py-1 rounded-full font-medium">
                 Warteliste
               </span>

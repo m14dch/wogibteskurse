@@ -140,14 +140,9 @@ x-xsrf-token: <token>
         "anlageBreitengrad": 0,
         "hatFreiePlaetze": true,
         "hasBuchungscode": false,
-        "status": {
-          "angebotStatusId": 0,
-          "buchbar": false,
-          "aufWarteliste": false,
-          "ausgebucht": false,
-          "bedingteAnmeldung": false
-        },
         "status1": "Buchbar ab 05.05.2026",
+        "status2": "Viele freie Plätze",
+        "statusClass": "status-green",
         "anmeldeschluss": "0001-01-01T00:00:00",
         "bild": "<base64 encoded image>"
       }
@@ -156,7 +151,17 @@ x-xsrf-token: <token>
 }
 ```
 
-**Important:** `geoKoordinaten`, `anlageLaengengrad`, and `anlageBreitengrad` are always `0`. Coordinates must be resolved from `kursOrt` via geocoding.
+**Important:** `geoKoordinaten`, `anlageLaengengrad`, and `anlageBreitengrad` are always `0` in the list response. Coordinates are resolved from `kursOrt` via geocoding (seeded from the detail endpoint at build time).
+
+**Status fields:** The API does not return a nested `status` object. Availability is communicated via three flat fields:
+
+| Field | Type | Values |
+|---|---|---|
+| `hatFreiePlaetze` | `boolean` | `true` = places available |
+| `status2` | `string \| null` | `"Viele freie Plätze"`, `"Wenige freie Plätze"`, `"Buchung auf Warteliste möglich"`, or `null` |
+| `statusClass` | `string \| null` | `"status-green"` (free), `"status-red"` (waitlist), or `null` |
+
+`status2` is authoritative for waitlist state and overrides `hatFreiePlaetze`.
 
 ---
 
