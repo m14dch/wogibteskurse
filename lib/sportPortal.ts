@@ -327,11 +327,19 @@ const getSeededLookupStmt = db.prepare<[string], { data: string }>(
   "SELECT data FROM lookups WHERE type = ?"
 );
 
+const getSeededLookupFetchedAtStmt = db.prepare<[], { min_fetched_at: number | null }>(
+  "SELECT MIN(fetched_at) AS min_fetched_at FROM lookups"
+);
+
 function fetchSeededLookups(): Record<LookupType, LookupOption[]> | null {
   if (!USE_SEEDED_CACHE()) return null;
 
-  const seedFetchedAt = getSeedFetchedAt();
-  if (!seedFetchedAt || Date.now() - seedFetchedAt * 1000 > SEEDED_CACHE_MAX_AGE_MS()) return null;
+  // Gate on MIN(lookups.fetched_at) independently of course freshness so a partial or
+  // complete lookup refresh failure doesn't silently serve stale filter options.
+  const lookupRow = getSeededLookupFetchedAtStmt.get();
+  const lookupFetchedAt = lookupRow?.min_fetched_at ?? null;
+  if (!lookupFetchedAt || Date.now() - lookupFetchedAt * 1000 > SEEDED_CACHE_MAX_AGE_MS())
+    return null;
 
   const entries = LOOKUP_TYPES.map((type) => {
     const row = getSeededLookupStmt.get(type);
@@ -402,6 +410,10 @@ const getAllCoursesCoordsStmt = db.prepare<
 >("SELECT angebotId, lat, lng, approximate, source FROM courses");
 
 const deleteAllCoursesStmt = db.prepare("DELETE FROM courses");
+
+const deleteOrphanedImagesStmt = db.prepare(
+  "DELETE FROM images WHERE angebotId NOT IN (SELECT angebotId FROM courses)"
+);
 
 const upsertRefreshedCourseStmt = db.prepare<
   [number, number, string, number | null, number | null, number, string | null, number, number]
@@ -730,6 +742,7 @@ async function runBackgroundRefresh(): Promise<void> {
           now
         );
       }
+      deleteOrphanedImagesStmt.run(); // match seed-import cleanup: remove images for dropped courses
     })();
 
     // 4. Reset in-memory caches so the next request reads fresh seeded data

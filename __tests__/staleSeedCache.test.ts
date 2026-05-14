@@ -1,23 +1,37 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
 // ── DB mock ───────────────────────────────────────────────────────────────────
-const { mockFetchedAtGet, mockSeededCoursesAll, mockInsertRun, mockDeleteRun, mockTransaction } =
-  vi.hoisted(() => ({
-    mockFetchedAtGet: vi.fn(),
-    mockSeededCoursesAll: vi.fn(),
-    mockInsertRun: vi.fn(),
-    mockDeleteRun: vi.fn(),
-    mockTransaction: vi.fn((fn: () => void) => fn),
-  }));
+const {
+  mockFetchedAtGet,
+  mockLookupFetchedAtGet,
+  mockLookupRowGet,
+  mockSeededCoursesAll,
+  mockInsertRun,
+  mockDeleteRun,
+  mockOrphanedImagesDeleteRun,
+  mockTransaction,
+} = vi.hoisted(() => ({
+  mockFetchedAtGet: vi.fn(),
+  mockLookupFetchedAtGet: vi.fn(),
+  mockLookupRowGet: vi.fn(),
+  mockSeededCoursesAll: vi.fn(),
+  mockInsertRun: vi.fn(),
+  mockDeleteRun: vi.fn(),
+  mockOrphanedImagesDeleteRun: vi.fn(),
+  mockTransaction: vi.fn((fn: () => void) => fn),
+}));
 
 vi.mock("@/lib/db", () => ({
   default: {
     prepare: vi.fn((sql: string) => {
       if (sql.includes("MAX(fetched_at)")) return { get: mockFetchedAtGet };
+      if (sql.includes("MIN(fetched_at)")) return { get: mockLookupFetchedAtGet };
+      if (sql.includes("FROM lookups WHERE type")) return { get: mockLookupRowGet };
       if (sql.includes("SELECT data") && sql.includes("kurstypId"))
         return { all: mockSeededCoursesAll };
       if (sql.includes("INSERT")) return { run: mockInsertRun };
       if (sql.includes("DELETE FROM courses")) return { run: mockDeleteRun };
+      if (sql.includes("DELETE FROM images")) return { run: mockOrphanedImagesDeleteRun };
       return { get: vi.fn().mockReturnValue(null), all: vi.fn().mockReturnValue([]), run: vi.fn() };
     }),
     transaction: mockTransaction,
@@ -29,7 +43,7 @@ const mockFetch = vi.fn();
 vi.stubGlobal("fetch", mockFetch);
 
 // ── Module under test ─────────────────────────────────────────────────────────
-import { fetchAllCourses, _resetForTests } from "@/lib/sportPortal";
+import { fetchAllCourses, fetchLookups, _resetForTests } from "@/lib/sportPortal";
 import type { Course } from "@/lib/sportPortal";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -109,9 +123,12 @@ describe("stale-while-revalidate seed cache", () => {
   beforeEach(() => {
     _resetForTests();
     mockFetchedAtGet.mockReset();
+    mockLookupFetchedAtGet.mockReset();
+    mockLookupRowGet.mockReset();
     mockSeededCoursesAll.mockReset();
     mockInsertRun.mockReset();
     mockDeleteRun.mockReset();
+    mockOrphanedImagesDeleteRun.mockReset();
     mockFetch.mockReset();
     // Vitest sets NODE_ENV=test which disables the seeded cache; override for these tests.
     vi.stubEnv("NODE_ENV", "production");
@@ -309,5 +326,66 @@ describe("stale-while-revalidate seed cache", () => {
     } finally {
       consoleSpy.mockRestore();
     }
+  });
+
+  it("deletes orphaned image rows for courses removed from upstream API", async () => {
+    const course = makeMinimalCourse();
+    mockFetchedAtGet.mockReturnValue({ max_fetched_at: daysAgo(10) }); // stale
+    mockSeededCoursesAll.mockReturnValue([seededRow(course)]);
+
+    let resolveOrphanDeleteCalled!: () => void;
+    const orphanDeleteCalled = new Promise<void>((resolve) => {
+      resolveOrphanDeleteCalled = resolve;
+    });
+    mockOrphanedImagesDeleteRun.mockImplementation(() => resolveOrphanDeleteCalled());
+
+    const freshCourse = makeMinimalCourse({ angebotId: 99 });
+    mockFetch.mockImplementation((_url: unknown, init?: { method?: string }) =>
+      Promise.resolve(init?.method === "POST" ? mockCoursePage([freshCourse]) : mockTokenResponse())
+    );
+
+    await fetchAllCourses({ kurstyp: 2 });
+    await orphanDeleteCalled;
+
+    expect(mockOrphanedImagesDeleteRun).toHaveBeenCalled();
+  });
+});
+
+describe("seeded lookup cache", () => {
+  beforeEach(() => {
+    _resetForTests();
+    mockLookupFetchedAtGet.mockReset();
+    mockLookupRowGet.mockReset();
+    mockFetch.mockReset();
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("DISABLE_SEEDED_COURSE_CACHE", "");
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it("falls through to live API when lookup MIN(fetched_at) is stale even if courses are fresh", async () => {
+    mockFetchedAtGet.mockReturnValue({ max_fetched_at: daysAgo(1) }); // courses fresh
+    mockLookupFetchedAtGet.mockReturnValue({ min_fetched_at: daysAgo(10) }); // lookups stale
+
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve({ success: true, data: [] }),
+    });
+
+    await fetchLookups();
+
+    expect(mockFetch).toHaveBeenCalled(); // lookup freshness check failed → live API
+  });
+
+  it("serves lookups from seed when all lookup types have fresh MIN(fetched_at)", async () => {
+    mockLookupFetchedAtGet.mockReturnValue({ min_fetched_at: daysAgo(1) }); // fresh
+    mockLookupRowGet.mockReturnValue({ data: "[]" }); // each type returns empty array
+
+    const result = await fetchLookups();
+
+    expect(mockFetch).not.toHaveBeenCalled(); // served from seed
+    expect(result).toBeDefined();
   });
 });
