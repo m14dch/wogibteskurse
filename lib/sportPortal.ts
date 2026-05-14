@@ -327,11 +327,19 @@ const getSeededLookupStmt = db.prepare<[string], { data: string }>(
   "SELECT data FROM lookups WHERE type = ?"
 );
 
+const getSeededLookupFetchedAtStmt = db.prepare<[], { min_fetched_at: number | null }>(
+  "SELECT MIN(fetched_at) AS min_fetched_at FROM lookups"
+);
+
 function fetchSeededLookups(): Record<LookupType, LookupOption[]> | null {
   if (!USE_SEEDED_CACHE()) return null;
 
-  const seedFetchedAt = getSeedFetchedAt();
-  if (!seedFetchedAt || Date.now() - seedFetchedAt * 1000 > SEEDED_CACHE_MAX_AGE_MS()) return null;
+  // Gate on MIN(lookups.fetched_at) independently of course freshness so a partial or
+  // complete lookup refresh failure doesn't silently serve stale filter options.
+  const lookupRow = getSeededLookupFetchedAtStmt.get();
+  const lookupFetchedAt = lookupRow?.min_fetched_at ?? null;
+  if (!lookupFetchedAt || Date.now() - lookupFetchedAt * 1000 > SEEDED_CACHE_MAX_AGE_MS())
+    return null;
 
   const entries = LOOKUP_TYPES.map((type) => {
     const row = getSeededLookupStmt.get(type);
@@ -389,6 +397,38 @@ const courseCache = new Map<string, CourseCacheEntry>();
 const courseInFlight = new Map<string, Promise<Course[]>>();
 const COURSES_TTL_MS = 5 * 60 * 1000;
 
+// Statements used by the background refresh to write fresh data back to SQLite
+const getAllCoursesCoordsStmt = db.prepare<
+  [],
+  {
+    angebotId: number;
+    lat: number | null;
+    lng: number | null;
+    approximate: number;
+    source: string | null;
+  }
+>("SELECT angebotId, lat, lng, approximate, source FROM courses");
+
+const deleteAllCoursesStmt = db.prepare("DELETE FROM courses");
+
+const deleteOrphanedImagesStmt = db.prepare(
+  "DELETE FROM images WHERE angebotId NOT IN (SELECT angebotId FROM courses)"
+);
+
+const upsertRefreshedCourseStmt = db.prepare<
+  [number, number, string, number | null, number | null, number, string | null, number, number]
+>(`INSERT OR REPLACE INTO courses
+    (angebotId, kurstypId, data, lat, lng, approximate, source, order_index, fetched_at)
+   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+
+const upsertRefreshedLookupStmt = db.prepare<[string, string, number]>(
+  "INSERT OR REPLACE INTO lookups (type, data, fetched_at) VALUES (?, ?, ?)"
+);
+
+const upsertRefreshedImageStmt = db.prepare<[number, string, number]>(
+  "INSERT OR REPLACE INTO images (angebotId, bild, fetched_at) VALUES (?, ?, ?)"
+);
+
 const getSeededCoursesStmt = db.prepare<
   [number],
   {
@@ -405,13 +445,18 @@ const getSeededCoursesStmt = db.prepare<
 const getSeededFetchedAtStmt = db.prepare<[], { max_fetched_at: number | null }>(
   "SELECT MAX(fetched_at) AS max_fetched_at FROM courses"
 );
-// Cached once per process: the seed's build timestamp never changes at runtime.
+// Cached per process; reset to undefined by the background refresh after a successful DB write.
 let cachedSeedFetchedAt: number | null | undefined = undefined;
 function getSeedFetchedAt(): number | null {
   if (cachedSeedFetchedAt !== undefined) return cachedSeedFetchedAt;
   const row = getSeededFetchedAtStmt.get();
   cachedSeedFetchedAt = row?.max_fetched_at ?? null;
   return cachedSeedFetchedAt;
+}
+
+function isSeedStale(): boolean {
+  const seedFetchedAt = getSeedFetchedAt();
+  return !seedFetchedAt || Date.now() - seedFetchedAt * 1000 > SEEDED_CACHE_MAX_AGE_MS();
 }
 
 function pruneCourseCache() {
@@ -525,12 +570,13 @@ function matchesFilters(course: Course, filters: CourseFilters): boolean {
 
 function fetchSeededCourses(filters: CourseFilters): Course[] | null {
   if (!USE_SEEDED_CACHE()) return null;
-  // check1 filters by live availability (hatFreiePlaetze) which changes continuously;
-  // seeded values are stale so we must fall through to the upstream API.
-  if (filters.check1) return null;
 
   const seedFetchedAt = getSeedFetchedAt();
-  if (!seedFetchedAt || Date.now() - seedFetchedAt * 1000 > SEEDED_CACHE_MAX_AGE_MS()) return null;
+  if (!seedFetchedAt) return null; // no seeded data at all
+
+  // check1 (only-available filter) is only reliable on fresh data — hatFreiePlaetze changes
+  // in real time so stale seeded values must not be used; fall through to the upstream API.
+  if (filters.check1 && isSeedStale()) return null;
 
   const rows = getSeededCoursesStmt.all(filters.kurstyp ?? 2);
   if (rows.length === 0) return null;
@@ -546,10 +592,7 @@ function fetchSeededCourses(filters: CourseFilters): Course[] | null {
     .filter((course) => matchesFilters(course, filters));
 }
 
-async function doFetchAllCourses(filters: CourseFilters): Promise<Course[]> {
-  const seeded = fetchSeededCourses(filters);
-  if (seeded) return seeded;
-
+async function fetchCoursesFromApi(filters: CourseFilters): Promise<Course[]> {
   const { xsrfToken, requestVerificationToken } = await getTokens();
 
   const cookieHeader = `__RequestVerificationToken=${requestVerificationToken}; XSRF-TOKEN=${xsrfToken}`;
@@ -629,6 +672,118 @@ async function doFetchAllCourses(filters: CourseFilters): Promise<Course[]> {
   return allCourses;
 }
 
+// ── Background stale-while-revalidate refresh ────────────────────────────────
+
+let backgroundRefreshInFlight = false;
+
+async function runBackgroundRefresh(): Promise<void> {
+  console.log("[cache] Background course cache refresh started");
+  const t0 = Date.now();
+
+  try {
+    // 1. Refresh lookups
+    const lookupEntries = await Promise.allSettled(
+      LOOKUP_TYPES.map(async (type) => {
+        const res = await fetchWithRetry(`${BASE_URL}/API/api/lookups/init/${type}`, {}, "lookups");
+        const json = await res.json();
+        const parsed = parseJsonObject(json, "lookups");
+        if (parsed.success !== true || !Array.isArray(parsed.data)) return null;
+        return [type, parsed.data] as [LookupType, LookupOption[]];
+      })
+    );
+    const validLookups = lookupEntries
+      .filter(
+        (r): r is PromiseFulfilledResult<[LookupType, LookupOption[]]> =>
+          r.status === "fulfilled" && r.value !== null
+      )
+      .map((r) => r.value);
+
+    // 2. Fetch all courses for each kurstyp (no filters — refresh the full seed).
+    //    Abort if any kurstyp fails OR returns 0 courses: a partial write would update
+    //    MAX(fetched_at) and make isSeedStale() return false even though some kurstypId
+    //    rows are still old. An empty-but-successful response is treated as a transient
+    //    fault because both types are always populated in production.
+    const allCourses: Course[] = [];
+    for (const kurstyp of [1, 2] as const) {
+      const courses = await fetchCoursesFromApi({ kurstyp });
+      if (courses.length === 0) {
+        console.warn(`[cache] Background refresh: kurstyp ${kurstyp} returned 0 courses, aborting`);
+        return;
+      }
+      allCourses.push(...courses);
+    }
+
+    // 3. Write to SQLite — snapshot replacement so courses dropped by the upstream API
+    //    are removed rather than served indefinitely. Pre-read existing coords before the
+    //    transaction to preserve LV95 precision; new courses get null and are geocoded on
+    //    the next request.
+    const existingCoords = new Map(
+      getAllCoursesCoordsStmt.all().map((row) => [row.angebotId, row])
+    );
+    const now = Math.floor(Date.now() / 1000);
+    db.transaction(() => {
+      for (const [type, data] of validLookups) {
+        upsertRefreshedLookupStmt.run(type, JSON.stringify(data), now);
+      }
+      deleteAllCoursesStmt.run(); // snapshot replacement — removes cancelled/expired courses
+      for (let i = 0; i < allCourses.length; i++) {
+        const course = allCourses[i];
+        const existing = existingCoords.get(course.angebotId);
+        const { bild, ...courseData } = course;
+        if (bild) upsertRefreshedImageStmt.run(course.angebotId, bild, now);
+        upsertRefreshedCourseStmt.run(
+          course.angebotId,
+          course.kurstypId,
+          JSON.stringify(courseData),
+          existing?.lat ?? null,
+          existing?.lng ?? null,
+          existing?.approximate ?? 1,
+          existing?.source ?? null,
+          i,
+          now
+        );
+      }
+      deleteOrphanedImagesStmt.run(); // match seed-import cleanup: remove images for dropped courses
+    })();
+
+    // 4. Reset in-memory caches so the next request reads fresh seeded data
+    cachedSeedFetchedAt = undefined;
+    courseCache.clear();
+    if (validLookups.length > 0) {
+      lookupsCache = null;
+      lookupsFetchedAt = 0;
+    }
+
+    console.log(
+      `[cache] Background refresh complete in ${Date.now() - t0}ms: ${allCourses.length} courses`
+    );
+  } catch (err) {
+    console.error("[cache] Background refresh failed:", err);
+  } finally {
+    backgroundRefreshInFlight = false;
+  }
+}
+
+function startBackgroundRefresh(): void {
+  if (backgroundRefreshInFlight) return;
+  backgroundRefreshInFlight = true;
+  void runBackgroundRefresh();
+}
+
+async function doFetchAllCourses(filters: CourseFilters): Promise<Course[]> {
+  const seeded = fetchSeededCourses(filters);
+  if (seeded !== null) {
+    if (isSeedStale()) startBackgroundRefresh();
+    return seeded;
+  }
+  // Seed exists but was bypassed (stale + check1) — still revalidate so future requests
+  // benefit from a fresh seed, including check1 requests once the seed is warm again.
+  if (USE_SEEDED_CACHE() && getSeedFetchedAt() && isSeedStale()) {
+    startBackgroundRefresh();
+  }
+  return fetchCoursesFromApi(filters);
+}
+
 export async function fetchAllCourses(filters: CourseFilters): Promise<Course[]> {
   const key = cacheKey(filters);
 
@@ -657,4 +812,14 @@ export async function fetchAllCourses(filters: CourseFilters): Promise<Course[]>
 
   courseInFlight.set(key, promise);
   return promise;
+}
+
+export function _resetForTests(): void {
+  tokenCache = null;
+  lookupsCache = null;
+  lookupsFetchedAt = 0;
+  courseCache.clear();
+  courseInFlight.clear();
+  cachedSeedFetchedAt = undefined;
+  backgroundRefreshInFlight = false;
 }
