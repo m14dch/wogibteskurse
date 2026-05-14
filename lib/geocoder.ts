@@ -70,19 +70,17 @@ const insertStmt = db.prepare<[string, number, number, number]>(
 // Ranks 1-4 are country/canton/commune — too vague to use as a venue location.
 const MIN_SWISSTOPO_RANK = 5;
 
+// Returns null when swisstopo responds but has no usable result (venue genuinely unknown).
+// Throws on network errors or non-ok HTTP so callers can skip caching on transient failures.
 async function geocodeWithSwisstopo(name: string): Promise<CachedVenue | null> {
-  try {
-    const query = encodeURIComponent(`${name} Zürich`);
-    const url = `https://api3.geo.admin.ch/rest/services/api/SearchServer?type=locations&searchText=${query}&sr=4326&lang=de&limit=1`;
-    const res = await swisstopoDispatch(() => fetchWithTimeout(url));
-    if (!res.ok) return null;
-    const json = await res.json();
-    const attrs = json?.results?.[0]?.attrs;
-    if (attrs?.lat && attrs?.lon && (attrs?.rank ?? 0) >= MIN_SWISSTOPO_RANK) {
-      return { lat: attrs.lat, lng: attrs.lon, approximate: false };
-    }
-  } catch {
-    // network error — fall through
+  const query = encodeURIComponent(`${name} Zürich`);
+  const url = `https://api3.geo.admin.ch/rest/services/api/SearchServer?type=locations&searchText=${query}&sr=4326&lang=de&limit=1`;
+  const res = await swisstopoDispatch(() => fetchWithTimeout(url));
+  if (!res.ok) throw new Error(`swisstopo HTTP ${res.status}`);
+  const json = await res.json();
+  const attrs = json?.results?.[0]?.attrs;
+  if (attrs?.lat && attrs?.lon && (attrs?.rank ?? 0) >= MIN_SWISSTOPO_RANK) {
+    return { lat: attrs.lat, lng: attrs.lon, approximate: false };
   }
   return null;
 }
@@ -100,14 +98,19 @@ export async function geocodeVenue(name: string): Promise<CachedVenue> {
     return { lat: cached.lat, lng: cached.lng, approximate: cached.approximate === 1 };
   }
 
-  // 3. Swisstopo (rank-filtered)
-  const swisstopo = await geocodeWithSwisstopo(name);
-  if (swisstopo) {
-    insertStmt.run(name, swisstopo.lat, swisstopo.lng, 0);
-    return swisstopo;
+  // 3. Swisstopo (rank-filtered) — don't cache on transient failures so the next
+  //    request can retry once swisstopo recovers.
+  try {
+    const swisstopo = await geocodeWithSwisstopo(name);
+    if (swisstopo) {
+      insertStmt.run(name, swisstopo.lat, swisstopo.lng, 0);
+      return swisstopo;
+    }
+  } catch {
+    return { ...ZURICH_CENTER, approximate: true };
   }
 
-  // 4. Zürich centre — genuine unknown
+  // 4. Zürich centre — venue genuinely unknown (swisstopo responded but had no usable result)
   insertStmt.run(name, ZURICH_CENTER.lat, ZURICH_CENTER.lng, 1);
   return { ...ZURICH_CENTER, approximate: true };
 }

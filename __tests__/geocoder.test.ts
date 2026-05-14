@@ -23,7 +23,7 @@ vi.mock("@/lib/db", () => ({
 const mockFetch = vi.fn();
 
 // ── Rate-limiter workaround ───────────────────────────────────────────────────
-// The geocoder tracks lastSwisstopo / lastNominatim at module level.
+// The geocoder tracks lastSwisstopo at module level.
 // We use fake timers with an ever-increasing offset (≥ 2 s per test) so that
 // `Date.now() - lastRef.v` always exceeds the rate-limit delay and the
 // setTimeout inside rateLimitedFetch is never triggered.
@@ -113,7 +113,7 @@ describe("geocodeVenue", () => {
     expect(mockInsertRun).toHaveBeenCalledWith("Vague Venue", 47.3769, 8.5417, 1);
   });
 
-  it("falls back to Zürich city centre (approximate) when swisstopo fails", async () => {
+  it("returns city centre (approximate) on transient swisstopo failure without caching", async () => {
     mockOverrideGet.mockReturnValue(null);
     mockCacheGet.mockReturnValue(null);
     mockFetch.mockResolvedValue({ ok: false });
@@ -123,7 +123,8 @@ describe("geocodeVenue", () => {
     expect(result.approximate).toBe(true);
     expect(result.lat).toBeCloseTo(47.3769, 3);
     expect(result.lng).toBeCloseTo(8.5417, 3);
-    expect(mockInsertRun).toHaveBeenCalledWith("Unknown Place", 47.3769, 8.5417, 1);
+    // must NOT cache so the next request can retry swisstopo after it recovers
+    expect(mockInsertRun).not.toHaveBeenCalled();
   });
 
   it("falls back to city centre when swisstopo returns empty results", async () => {
