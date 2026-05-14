@@ -69,10 +69,9 @@ Requires Node.js 20+. No `.env` file needed — defaults work out of the box.
 
 **Optional environment variables:**
 
-| Variable             | Default             | Description                                                                |
-| -------------------- | ------------------- | -------------------------------------------------------------------------- |
-| `DATABASE_PATH`      | `./data/geocode.db` | SQLite database location                                                   |
-| `NOMINATIM_DISABLED` | `false`             | Set to `true` to disable the Nominatim geocoding fallback (swisstopo only) |
+| Variable        | Default             | Description              |
+| --------------- | ------------------- | ------------------------ |
+| `DATABASE_PATH` | `./data/geocode.db` | SQLite database location |
 
 ---
 
