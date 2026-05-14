@@ -349,6 +349,44 @@ describe("stale-while-revalidate seed cache", () => {
 
     expect(mockOrphanedImagesDeleteRun).toHaveBeenCalled();
   });
+
+  it("aborts snapshot replacement when one kurstyp returns an empty-but-successful response", async () => {
+    const course = makeMinimalCourse();
+    mockFetchedAtGet.mockReturnValue({ max_fetched_at: daysAgo(10) }); // stale
+    mockSeededCoursesAll.mockReturnValue([seededRow(course)]);
+
+    // Resolve when background refresh logs the per-type abort warning
+    let resolveAborted!: () => void;
+    const aborted = new Promise<void>((resolve) => {
+      resolveAborted = resolve;
+    });
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation((...args) => {
+      if (String(args[0]).includes("aborting")) resolveAborted();
+    });
+
+    // First POST (kurstyp 1 first page) returns 0 courses — simulates transient empty response
+    let postCallCount = 0;
+    mockFetch.mockImplementation((_url: unknown, init?: { method?: string }) => {
+      if (init?.method === "POST") {
+        postCallCount++;
+        return Promise.resolve(
+          postCallCount === 1
+            ? mockCoursePage([], 0) // kurstyp 1 → empty
+            : mockCoursePage([makeMinimalCourse({ angebotId: 99 })])
+        );
+      }
+      return Promise.resolve(mockTokenResponse());
+    });
+
+    try {
+      await fetchAllCourses({ kurstyp: 2 }); // returns stale, triggers background refresh
+      await aborted; // wait until the abort warning fires
+
+      expect(mockDeleteRun).not.toHaveBeenCalled(); // transaction was not reached
+    } finally {
+      warnSpy.mockRestore();
+    }
+  });
 });
 
 describe("seeded lookup cache", () => {

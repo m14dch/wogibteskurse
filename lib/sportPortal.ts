@@ -699,17 +699,18 @@ async function runBackgroundRefresh(): Promise<void> {
       .map((r) => r.value);
 
     // 2. Fetch all courses for each kurstyp (no filters — refresh the full seed).
-    //    Abort if any kurstyp fails: a partial write would update MAX(fetched_at) and
-    //    make isSeedStale() return false even though some kurstypId rows are still old.
+    //    Abort if any kurstyp fails OR returns 0 courses: a partial write would update
+    //    MAX(fetched_at) and make isSeedStale() return false even though some kurstypId
+    //    rows are still old. An empty-but-successful response is treated as a transient
+    //    fault because both types are always populated in production.
     const allCourses: Course[] = [];
     for (const kurstyp of [1, 2] as const) {
       const courses = await fetchCoursesFromApi({ kurstyp });
+      if (courses.length === 0) {
+        console.warn(`[cache] Background refresh: kurstyp ${kurstyp} returned 0 courses, aborting`);
+        return;
+      }
       allCourses.push(...courses);
-    }
-
-    if (allCourses.length === 0) {
-      console.warn("[cache] Background refresh fetched 0 courses, aborting");
-      return;
     }
 
     // 3. Write to SQLite — snapshot replacement so courses dropped by the upstream API
