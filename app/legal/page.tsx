@@ -94,9 +94,8 @@ export default function LegalPage() {
               </p>
               <p className="mt-2">
                 Da das Sport-Portal nicht für alle Kursorte Koordinaten liefert, werden Kursorte
-                serverseitig geocodiert. Dafür wird primär geo.admin.ch verwendet. Falls dort kein
-                passendes Ergebnis gefunden wird, kann als Fallback Nominatim von OpenStreetMap
-                verwendet werden.
+                serverseitig geocodiert. Dafür wird geo.admin.ch verwendet. Nicht auflösbare Orte
+                werden auf das Stadtzentrum Zürich gesetzt.
               </p>
               <p className="mt-2">
                 Die Anwendung verlinkt ausserdem auf das offizielle Angebot der Stadt Zürich und auf

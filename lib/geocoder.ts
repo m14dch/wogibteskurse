@@ -3,9 +3,7 @@ import db from "./db";
 // Zürich city centre fallback
 const ZURICH_CENTER = { lat: 47.3769, lng: 8.5417 };
 
-// Swisstopo: 5 req/sec is fine; Nominatim policy requires ≤ 1 req/sec
 const SWISSTOPO_RATE_MS = 200;
-const NOMINATIM_RATE_MS = 1100;
 
 function envInt(name: string, fallback: number): number {
   const parsed = Number.parseInt(process.env[name] ?? "", 10);
@@ -36,7 +34,6 @@ function makeRateLimiter(rateMs: number) {
 }
 
 const swisstopoDispatch = makeRateLimiter(SWISSTOPO_RATE_MS);
-const nominatimDispatch = makeRateLimiter(NOMINATIM_RATE_MS);
 
 function fetchWithTimeout(url: string): Promise<Response> {
   const controller = new AbortController();
@@ -90,23 +87,6 @@ async function geocodeWithSwisstopo(name: string): Promise<CachedVenue | null> {
   return null;
 }
 
-async function geocodeWithNominatim(name: string): Promise<CachedVenue | null> {
-  try {
-    const query = encodeURIComponent(`${name} Zürich`);
-    const url = `https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=1&countrycodes=ch`;
-    const res = await nominatimDispatch(() => fetchWithTimeout(url));
-    if (!res.ok) return null;
-    const json = await res.json();
-    const result = json?.[0];
-    if (result?.lat && result?.lon) {
-      return { lat: parseFloat(result.lat), lng: parseFloat(result.lon), approximate: false };
-    }
-  } catch {
-    // network error — fall through
-  }
-  return null;
-}
-
 export async function geocodeVenue(name: string): Promise<CachedVenue> {
   // 1. Manual override — highest priority, never replaced by API
   const override = overrideStmt.get(name);
@@ -127,16 +107,7 @@ export async function geocodeVenue(name: string): Promise<CachedVenue> {
     return swisstopo;
   }
 
-  // 4. Nominatim fallback — set NOMINATIM_DISABLED=true to skip
-  if (process.env.NOMINATIM_DISABLED !== "true") {
-    const nominatim = await geocodeWithNominatim(name);
-    if (nominatim) {
-      insertStmt.run(name, nominatim.lat, nominatim.lng, 0);
-      return nominatim;
-    }
-  }
-
-  // 5. Zürich centre — genuine unknown
+  // 4. Zürich centre — genuine unknown
   insertStmt.run(name, ZURICH_CENTER.lat, ZURICH_CENTER.lng, 1);
   return { ...ZURICH_CENTER, approximate: true };
 }
