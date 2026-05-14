@@ -1,14 +1,14 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
 // ── DB mock ───────────────────────────────────────────────────────────────────
-const { mockFetchedAtGet, mockSeededCoursesAll, mockInsertRun, mockTransaction } = vi.hoisted(
-  () => ({
+const { mockFetchedAtGet, mockSeededCoursesAll, mockInsertRun, mockDeleteRun, mockTransaction } =
+  vi.hoisted(() => ({
     mockFetchedAtGet: vi.fn(),
     mockSeededCoursesAll: vi.fn(),
     mockInsertRun: vi.fn(),
+    mockDeleteRun: vi.fn(),
     mockTransaction: vi.fn((fn: () => void) => fn),
-  })
-);
+  }));
 
 vi.mock("@/lib/db", () => ({
   default: {
@@ -17,7 +17,8 @@ vi.mock("@/lib/db", () => ({
       if (sql.includes("SELECT data") && sql.includes("kurstypId"))
         return { all: mockSeededCoursesAll };
       if (sql.includes("INSERT")) return { run: mockInsertRun };
-      return { get: vi.fn().mockReturnValue(null), all: vi.fn().mockReturnValue([]) };
+      if (sql.includes("DELETE FROM courses")) return { run: mockDeleteRun };
+      return { get: vi.fn().mockReturnValue(null), all: vi.fn().mockReturnValue([]), run: vi.fn() };
     }),
     transaction: mockTransaction,
   },
@@ -110,6 +111,7 @@ describe("stale-while-revalidate seed cache", () => {
     mockFetchedAtGet.mockReset();
     mockSeededCoursesAll.mockReset();
     mockInsertRun.mockReset();
+    mockDeleteRun.mockReset();
     mockFetch.mockReset();
     // Vitest sets NODE_ENV=test which disables the seeded cache; override for these tests.
     vi.stubEnv("NODE_ENV", "production");
@@ -200,9 +202,11 @@ describe("stale-while-revalidate seed cache", () => {
     mockFetchedAtGet.mockReturnValue({ max_fetched_at: daysAgo(10) }); // stale
     mockSeededCoursesAll.mockReturnValue([seededRow(course)]);
 
-    mockFetch
-      .mockResolvedValueOnce(mockTokenResponse())
-      .mockResolvedValueOnce(mockCoursePage([course]));
+    // Background refresh also starts here (finding 2), so use method-based dispatch:
+    // GET = token/lookup fetches, POST = course page fetches.
+    mockFetch.mockImplementation((_url: unknown, init?: { method?: string }) =>
+      Promise.resolve(init?.method === "POST" ? mockCoursePage([course]) : mockTokenResponse())
+    );
 
     const result = await fetchAllCourses({ kurstyp: 2, check1: true });
 
@@ -252,6 +256,51 @@ describe("stale-while-revalidate seed cache", () => {
     try {
       // Different filter keys → two separate doFetchAllCourses calls, but only one refresh
       await Promise.all([fetchAllCourses({ kurstyp: 1 }), fetchAllCourses({ kurstyp: 2 })]);
+
+      const startedCount = consoleSpy.mock.calls.filter(
+        (args) => args[0] === "[cache] Background course cache refresh started"
+      ).length;
+      expect(startedCount).toBe(1);
+    } finally {
+      consoleSpy.mockRestore();
+    }
+  });
+
+  it("deletes stale courses from SQLite during background refresh (snapshot replacement)", async () => {
+    const course = makeMinimalCourse();
+    mockFetchedAtGet.mockReturnValue({ max_fetched_at: daysAgo(10) }); // stale
+    mockSeededCoursesAll.mockReturnValue([seededRow(course)]);
+
+    // Resolve when DELETE runs — proves the transaction performed snapshot replacement
+    let resolveDeleteCalled!: () => void;
+    const deleteCalled = new Promise<void>((resolve) => {
+      resolveDeleteCalled = resolve;
+    });
+    mockDeleteRun.mockImplementation(() => resolveDeleteCalled());
+
+    const freshCourse = makeMinimalCourse({ angebotId: 99 });
+    mockFetch.mockImplementation((_url: unknown, init?: { method?: string }) =>
+      Promise.resolve(init?.method === "POST" ? mockCoursePage([freshCourse]) : mockTokenResponse())
+    );
+
+    await fetchAllCourses({ kurstyp: 2 }); // returns stale data, triggers background refresh
+    await deleteCalled; // wait until the transaction's DELETE executes
+
+    expect(mockDeleteRun).toHaveBeenCalled();
+  });
+
+  it("triggers background refresh when check1=true and seed is stale", async () => {
+    const course = makeMinimalCourse({ hatFreiePlaetze: true });
+    mockFetchedAtGet.mockReturnValue({ max_fetched_at: daysAgo(10) }); // stale
+    mockSeededCoursesAll.mockReturnValue([seededRow(course)]);
+
+    mockFetch.mockImplementation((_url: unknown, init?: { method?: string }) =>
+      Promise.resolve(init?.method === "POST" ? mockCoursePage([course]) : mockTokenResponse())
+    );
+
+    const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+    try {
+      await fetchAllCourses({ kurstyp: 2, check1: true });
 
       const startedCount = consoleSpy.mock.calls.filter(
         (args) => args[0] === "[cache] Background course cache refresh started"
