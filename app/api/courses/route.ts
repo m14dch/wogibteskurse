@@ -140,19 +140,27 @@ export async function POST(req: NextRequest) {
     const enriched = courses
       .map((course) => {
         const venue = coords.get(course.kursOrt);
-        const lat = typeof course.lat === "number" ? course.lat : (venue?.lat ?? null);
-        const lng = typeof course.lng === "number" ? course.lng : (venue?.lng ?? null);
+        // Pre-baked coords (seeded LV95 or overrides) take precedence; fall back to geocoder.
+        const hasPrebakedCoords = typeof course.lat === "number" && typeof course.lng === "number";
+        const lat = hasPrebakedCoords ? course.lat : (venue?.lat ?? null);
+        const lng = hasPrebakedCoords ? course.lng : (venue?.lng ?? null);
+        // When coords come from geocoder (not pre-baked), use geocoder's approximate flag so
+        // that a precise swisstopo hit isn't overridden by a stale approximate=true in the DB.
+        const approximate = hasPrebakedCoords
+          ? (course.approximate ?? false)
+          : (venue?.approximate ?? false);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { bild: _bild, ...rest } = course;
         return {
           ...rest,
           lat,
           lng,
-          approximate: course.approximate ?? venue?.approximate ?? false,
+          approximate,
         };
       })
       .filter((course) => {
-        if (!bounds || course.lat === null || course.lng === null) return true;
+        if (!bounds || typeof course.lat !== "number" || typeof course.lng !== "number")
+          return true;
         return (
           course.lat <= bounds.north &&
           course.lat >= bounds.south &&
