@@ -122,38 +122,46 @@ export default function CoursePopup({ course }: Props) {
         )}
       </dl>
 
-      {/* Status badges */}
-      <div className="flex flex-wrap gap-1.5 mb-4">
-        {course.hatFreiePlaetze ? (
-          <span className="bg-green-100 text-green-800 text-xs px-2.5 py-1 rounded-full font-medium">
-            Freie Plätze
-          </span>
-        ) : course.status?.ausgebucht ? (
-          <span className="bg-red-100 text-red-800 text-xs px-2.5 py-1 rounded-full font-medium">
-            Ausgebucht
-          </span>
-        ) : null}
-        {course.status?.aufWarteliste && (
-          <span className="bg-orange-100 text-orange-800 text-xs px-2.5 py-1 rounded-full font-medium">
-            Warteliste
-          </span>
-        )}
-        {course.status?.bedingteAnmeldung && (
-          <span className="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-full font-medium">
-            Bedingte Anmeldung
-          </span>
-        )}
-        {course.hasBuchungscode && (
-          <span className="bg-purple-100 text-purple-800 text-xs px-2.5 py-1 rounded-full font-medium">
-            Buchungscode erforderlich
-          </span>
-        )}
-        {course.approximate && (
-          <span className="bg-yellow-100 text-yellow-800 text-xs px-2.5 py-1 rounded-full font-medium">
-            Standort ungefähr
-          </span>
-        )}
-      </div>
+      {/* Status badges — derive from always-present fields; status object only exists for seeded data */}
+      {(() => {
+        const aufWarteliste =
+          course.status?.aufWarteliste ?? course.status2?.toLowerCase().includes("warteliste");
+        const ausgebucht = course.status?.ausgebucht ?? (!course.hatFreiePlaetze && !aufWarteliste);
+        const bedingteAnmeldung = course.status?.bedingteAnmeldung ?? false;
+        return (
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {course.hatFreiePlaetze ? (
+              <span className="bg-green-100 text-green-800 text-xs px-2.5 py-1 rounded-full font-medium">
+                Freie Plätze
+              </span>
+            ) : ausgebucht ? (
+              <span className="bg-red-100 text-red-800 text-xs px-2.5 py-1 rounded-full font-medium">
+                Ausgebucht
+              </span>
+            ) : null}
+            {aufWarteliste && (
+              <span className="bg-orange-100 text-orange-800 text-xs px-2.5 py-1 rounded-full font-medium">
+                Warteliste
+              </span>
+            )}
+            {bedingteAnmeldung && (
+              <span className="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-full font-medium">
+                Bedingte Anmeldung
+              </span>
+            )}
+            {course.hasBuchungscode && (
+              <span className="bg-purple-100 text-purple-800 text-xs px-2.5 py-1 rounded-full font-medium">
+                Buchungscode erforderlich
+              </span>
+            )}
+            {course.approximate && (
+              <span className="bg-yellow-100 text-yellow-800 text-xs px-2.5 py-1 rounded-full font-medium">
+                Standort ungefähr
+              </span>
+            )}
+          </div>
+        );
+      })()}
 
       {course.status1 && <p className="text-xs text-gray-500 mb-4">{course.status1}</p>}
 

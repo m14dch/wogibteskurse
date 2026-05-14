@@ -265,6 +265,8 @@ export interface Course {
   hasBuchungscode: boolean;
   status?: CourseStatus;
   status1: string;
+  status2?: string | null;
+  statusClass?: string | null;
   anmeldeschluss: string;
   bild?: string;
   lat?: number | null;
