@@ -1,8 +1,8 @@
 # wogibteskurse
 
-An interactive map for exploring kids' sport and leisure courses offered by the City of Zürich. Browse, filter, and discover courses spatially — something the official portal doesn't support.
+An interactive map for exploring kids' sport and leisure courses offered by the City of Zürich. Browse, filter, and discover courses spatially.
 
-**Live:** [wogibteskurse.fly.dev](https://wogibteskurse.fly.dev)
+**Live:** [wogibteskurse.m14d.ch](https://wogibteskurse.m14d.ch/)
 
 > **Disclaimer:** This project is an independent, community-built tool. It is **not** created by, affiliated with, or endorsed by the City of Zürich or any of its departments. Course data is fetched in real time from the public sport portal at `stadt-zuerich.ch`. Use this application at your own risk. Always verify course details on the [official portal](https://www.stadt-zuerich.ch/sport-portal) before making any decisions or bookings.
 
@@ -10,10 +10,10 @@ An interactive map for exploring kids' sport and leisure courses offered by the 
 
 ## What it does
 
-- Displays Zürich kids' courses (Ferienkurse & Semesterkurse) as pins on a swisstopo map
+- Displays Ferienkurse and Semesterkurse as pins on a swisstopo map
 - Guided onboarding wizard to quickly narrow down by course type, holiday period, and birth year
 - Supports all the same filters as the official portal: sport/activity, holiday type, holiday week, school district, birth year, gender, category
-- Adds a **map area filter** — show only courses within the current map view
+- Adds a map area filter to show only courses within the current map view
 - Groups overlapping pins at the same venue; click to browse all courses there
 - Click any pin to see full course details and a direct booking link
 - Mobile-friendly with a tab bar (map / list / filter) and bottom sheet
@@ -69,9 +69,10 @@ Requires Node.js 20+. No `.env` file needed — defaults work out of the box.
 
 **Optional environment variables:**
 
-| Variable        | Default             | Description              |
-| --------------- | ------------------- | ------------------------ |
-| `DATABASE_PATH` | `./data/geocode.db` | SQLite database location |
+| Variable             | Default             | Description                                                                |
+| -------------------- | ------------------- | -------------------------------------------------------------------------- |
+| `DATABASE_PATH`      | `./data/geocode.db` | SQLite database location                                                   |
+| `NOMINATIM_DISABLED` | `false`             | Set to `true` to disable the Nominatim geocoding fallback (swisstopo only) |
 
 ---
 
@@ -79,29 +80,14 @@ Requires Node.js 20+. No `.env` file needed — defaults work out of the box.
 
 ```
 wogibteskurse/
-├── app/
-│   ├── api/
-│   │   ├── courses/        # Proxy + geocoding + bounds filter
-│   │   ├── image/[id]/     # Course image cache endpoint
-│   │   └── lookups/        # Filter options (ferientyp, ferienwoche, …)
-│   ├── page.tsx
-│   └── layout.tsx
-├── components/
-│   ├── MapPage.tsx         # Main controller (state, filters, mobile tabs)
-│   ├── MapView.tsx         # Leaflet map with swisstopo tiles
-│   ├── FilterPanel.tsx     # Filter sidebar
-│   ├── CourseList.tsx      # Scrollable course list
-│   ├── CoursePopup.tsx     # Course detail panel
-│   └── WizardModal.tsx     # Onboarding wizard
-├── lib/
-│   ├── geocoder.ts         # Venue geocoding + SQLite cache
-│   ├── sportPortal.ts      # Zürich API client (XSRF handling, pagination)
-│   ├── urlState.ts         # Filter ↔ URL params serialization
-│   └── db.ts               # SQLite connection + venue overrides
+├── app/                    # Next.js app routes and API endpoints
+├── components/             # Map, filter, list, detail, and wizard UI
+├── lib/                    # API client, geocoder, URL state, and SQLite setup
+├── public/brand/           # Logo and favicon assets
+├── scripts/                # Build-time cache seeding
 ├── __tests__/              # Vitest tests
-├── data/                   # SQLite geocoding cache (gitignored)
-├── docs/
-│   └── api.md              # Sport portal API research notes
+├── data/                   # Runtime SQLite cache (gitignored)
+├── docs/                   # Notes and screenshots
 ├── Dockerfile
 ├── docker-compose.yml
 └── fly.toml
