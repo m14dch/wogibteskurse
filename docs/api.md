@@ -155,11 +155,11 @@ x-xsrf-token: <token>
 
 **Status fields:** The API does not return a nested `status` object. Availability is communicated via three flat fields:
 
-| Field | Type | Values |
-|---|---|---|
-| `hatFreiePlaetze` | `boolean` | `true` = places available |
-| `status2` | `string \| null` | `"Viele freie Plätze"`, `"Wenige freie Plätze"`, `"Buchung auf Warteliste möglich"`, or `null` |
-| `statusClass` | `string \| null` | `"status-green"` (free), `"status-red"` (waitlist), or `null` |
+| Field             | Type             | Values                                                                                         |
+| ----------------- | ---------------- | ---------------------------------------------------------------------------------------------- |
+| `hatFreiePlaetze` | `boolean`        | `true` = places available                                                                      |
+| `status2`         | `string \| null` | `"Viele freie Plätze"`, `"Wenige freie Plätze"`, `"Buchung auf Warteliste möglich"`, or `null` |
+| `statusClass`     | `string \| null` | `"status-green"` (free), `"status-red"` (waitlist), or `null`                                  |
 
 `status2` is authoritative for waitlist state and overrides `hatFreiePlaetze`.
 
