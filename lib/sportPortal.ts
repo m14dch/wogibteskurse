@@ -390,10 +390,18 @@ const courseInFlight = new Map<string, Promise<Course[]>>();
 const COURSES_TTL_MS = 5 * 60 * 1000;
 
 // Statements used by the background refresh to write fresh data back to SQLite
-const getExistingCourseCoordStmt = db.prepare<
-  [number],
-  { lat: number | null; lng: number | null; approximate: number; source: string | null }
->("SELECT lat, lng, approximate, source FROM courses WHERE angebotId = ?");
+const getAllCoursesCoordsStmt = db.prepare<
+  [],
+  {
+    angebotId: number;
+    lat: number | null;
+    lng: number | null;
+    approximate: number;
+    source: string | null;
+  }
+>("SELECT angebotId, lat, lng, approximate, source FROM courses");
+
+const deleteAllCoursesStmt = db.prepare("DELETE FROM courses");
 
 const upsertRefreshedCourseStmt = db.prepare<
   [number, number, string, number | null, number | null, number, string | null, number, number]
@@ -692,16 +700,22 @@ async function runBackgroundRefresh(): Promise<void> {
       return;
     }
 
-    // 3. Write to SQLite — preserve existing coords (LV95 from seed) where available;
-    //    new courses get null coords and will be geocoded on the next API request.
+    // 3. Write to SQLite — snapshot replacement so courses dropped by the upstream API
+    //    are removed rather than served indefinitely. Pre-read existing coords before the
+    //    transaction to preserve LV95 precision; new courses get null and are geocoded on
+    //    the next request.
+    const existingCoords = new Map(
+      getAllCoursesCoordsStmt.all().map((row) => [row.angebotId, row])
+    );
     const now = Math.floor(Date.now() / 1000);
     db.transaction(() => {
       for (const [type, data] of validLookups) {
         upsertRefreshedLookupStmt.run(type, JSON.stringify(data), now);
       }
+      deleteAllCoursesStmt.run(); // snapshot replacement — removes cancelled/expired courses
       for (let i = 0; i < allCourses.length; i++) {
         const course = allCourses[i];
-        const existing = getExistingCourseCoordStmt.get(course.angebotId);
+        const existing = existingCoords.get(course.angebotId);
         const { bild, ...courseData } = course;
         if (bild) upsertRefreshedImageStmt.run(course.angebotId, bild, now);
         upsertRefreshedCourseStmt.run(
@@ -747,6 +761,11 @@ async function doFetchAllCourses(filters: CourseFilters): Promise<Course[]> {
   if (seeded !== null) {
     if (isSeedStale()) startBackgroundRefresh();
     return seeded;
+  }
+  // Seed exists but was bypassed (stale + check1) — still revalidate so future requests
+  // benefit from a fresh seed, including check1 requests once the seed is warm again.
+  if (USE_SEEDED_CACHE() && getSeedFetchedAt() && isSeedStale()) {
+    startBackgroundRefresh();
   }
   return fetchCoursesFromApi(filters);
 }
