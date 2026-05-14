@@ -122,12 +122,10 @@ export default function CoursePopup({ course }: Props) {
         )}
       </dl>
 
-      {/* Status badges — derive from always-present fields; status object only exists for seeded data */}
+      {/* Status badges */}
       {(() => {
-        const aufWarteliste =
-          course.status?.aufWarteliste ?? course.status2?.toLowerCase().includes("warteliste");
-        const ausgebucht = course.status?.ausgebucht ?? (!course.hatFreiePlaetze && !aufWarteliste);
-        const bedingteAnmeldung = course.status?.bedingteAnmeldung ?? false;
+        const aufWarteliste = course.status2?.toLowerCase().includes("warteliste") ?? false;
+        const ausgebucht = !course.hatFreiePlaetze && !aufWarteliste;
         return (
           <div className="flex flex-wrap gap-1.5 mb-4">
             {course.hatFreiePlaetze ? (
@@ -142,11 +140,6 @@ export default function CoursePopup({ course }: Props) {
             {aufWarteliste && (
               <span className="bg-orange-100 text-orange-800 text-xs px-2.5 py-1 rounded-full font-medium">
                 Warteliste
-              </span>
-            )}
-            {bedingteAnmeldung && (
-              <span className="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-full font-medium">
-                Bedingte Anmeldung
               </span>
             )}
             {course.hasBuchungscode && (

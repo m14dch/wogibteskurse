@@ -229,14 +229,6 @@ export interface LookupOption {
   value: string | number;
 }
 
-export interface CourseStatus {
-  angebotStatusId: number;
-  buchbar: boolean;
-  aufWarteliste: boolean;
-  ausgebucht: boolean;
-  bedingteAnmeldung: boolean;
-}
-
 export interface Course {
   angebotId: number;
   nummer: string;
@@ -263,7 +255,6 @@ export interface Course {
   kursOrt: string;
   hatFreiePlaetze: boolean;
   hasBuchungscode: boolean;
-  status?: CourseStatus;
   status1: string;
   status2?: string | null;
   statusClass?: string | null;

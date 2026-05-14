@@ -30,13 +30,6 @@ function course(zeitpunkt1: string, zeitpunkt2 = "", zeitpunkt3 = "", von = "", 
     kursOrt: "",
     hatFreiePlaetze: true,
     hasBuchungscode: false,
-    status: {
-      angebotStatusId: 0,
-      buchbar: true,
-      aufWarteliste: false,
-      ausgebucht: false,
-      bedingteAnmeldung: false,
-    },
     status1: "",
     anmeldeschluss: "",
   };
