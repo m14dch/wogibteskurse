@@ -128,17 +128,17 @@ export default function CoursePopup({ course }: Props) {
           <span className="bg-green-100 text-green-800 text-xs px-2.5 py-1 rounded-full font-medium">
             Freie Plätze
           </span>
-        ) : course.status.ausgebucht ? (
+        ) : course.status?.ausgebucht ? (
           <span className="bg-red-100 text-red-800 text-xs px-2.5 py-1 rounded-full font-medium">
             Ausgebucht
           </span>
         ) : null}
-        {course.status.aufWarteliste && (
+        {course.status?.aufWarteliste && (
           <span className="bg-orange-100 text-orange-800 text-xs px-2.5 py-1 rounded-full font-medium">
             Warteliste
           </span>
         )}
-        {course.status.bedingteAnmeldung && (
+        {course.status?.bedingteAnmeldung && (
           <span className="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-full font-medium">
             Bedingte Anmeldung
           </span>

@@ -263,7 +263,7 @@ export interface Course {
   kursOrt: string;
   hatFreiePlaetze: boolean;
   hasBuchungscode: boolean;
-  status: CourseStatus;
+  status?: CourseStatus;
   status1: string;
   anmeldeschluss: string;
   bild?: string;
